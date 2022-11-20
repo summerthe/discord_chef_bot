@@ -1,5 +1,6 @@
-import discord
 from pathlib import Path
+
+import discord
 from discord.ext import bridge
 
 from .utility.helper import ChefHelpCommand
@@ -25,7 +26,7 @@ class ChefBot(bridge.Bot):
         super().__init__(description=description, *args, **options)
 
         # List and log cogs, excluding file which start with _(underscode).
-        cogs_list = [_path.stem for _path in Path("cogs").glob("[!_]*.py")]
+        cogs_list = [_path.stem for _path in Path("chef_bot/cogs").glob("[!_]*.py")]
 
         for cog in cogs_list:
-            self.load_extension(f"cogs.{cog}")
+            self.load_extension(f"chef_bot.cogs.{cog}")

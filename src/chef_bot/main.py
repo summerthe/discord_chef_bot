@@ -1,12 +1,8 @@
-from environs import Env
-
 from .bot import ChefBot
+from .utility.env_util import set_env
 from .utility.log_util import setup_logging
 
-# Read .env file and set environment variables.
-env = Env()
-env.read_env()
-
+env = set_env()
 # Setting loggin
 setup_logging()
 

@@ -1,11 +1,10 @@
 import discord
 from discord.ext import bridge, commands
 from discord.ext.commands.errors import MissingRequiredArgument
-from environs import Env
 
-# Read .env file and set environment variables.
-env = Env()
-env.read_env()
+from chef_bot.utility.env_util import set_env
+
+env = set_env()
 
 
 class BotEvents(commands.Cog):
@@ -16,7 +15,7 @@ class BotEvents(commands.Cog):
     async def on_ready(self):
         """Send bot is ready message on developer's discord channel."""
         await self.bot.get_channel(env.int("BOT_DEVELOPER_CHANNEL", int)).send(
-            "Bot is online."
+            "Bot is online.",
         )
 
     @commands.Cog.listener()
@@ -40,7 +39,8 @@ class BotEvents(commands.Cog):
             # MissingRequiredArgument argument can occur from prefix commands.
             error_s = f"{error} Rerun command with the value, or type `!help {ctx.command}` for help."
             embed = discord.Embed(
-                title="Missing argument", color=discord.Color.blurple()
+                title="Missing argument",
+                color=discord.Color.blurple(),
             )
             embed.description = error_s
             await ctx.send(embed=embed)

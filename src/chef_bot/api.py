@@ -1,10 +1,10 @@
-import requests
 import json
-from environs import Env
 
-# Read .env file and set environment variables.
-env = Env()
-env.read_env()
+import requests
+
+from .utility.env_util import set_env
+
+env = set_env()
 
 
 def get_nutrients(food: str) -> dict[str, any]:
@@ -16,7 +16,7 @@ def get_nutrients(food: str) -> dict[str, any]:
             "line_delimited": True,
             "use_raw_foods": True,
             "use_branded_foods": False,
-        }
+        },
     )
     headers = {
         "x-app-id": env("NUTRITIONIX_APPLICATION_ID"),
